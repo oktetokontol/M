@@ -2104,7 +2104,7 @@ tebece.sendMessage(m.chat, buttonMessage)
                break
  case 'hallo_sayang':
 if (!isCreator) throw mess.owner
-FAUZI WAS HERE = '``🔥 FαυȥყRêålz 🔥``',
+FAUZI WAS HERE = '``🔥 Fαυȥi 🔥``',
 tebece.sendMessage(m.chat, {text: FAUZI WAS HERE, thumbnail: thumb, quoted: m, contextInfo: { externalAdReply:{title: `${bugweb}`,body: '🔥 FαυȥყRêålz 🔥',previewType:"PHOTO",thumbnail: thumb,sourceUrl:`https://xnxx.com`}}})
 break
 case 'dok':
