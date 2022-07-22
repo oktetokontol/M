@@ -220,7 +220,7 @@ ${Array.from(room.jawaban, (jawaban, index) => {
             kuis = true
             jawaban = kuismath[m.sender.split('@')[0]]
             if (budy.toLowerCase() == jawaban) {
-                await m.reply(`🎮 Kuis Matematika  🎮\n\nJawaban Benar 🎉\n\nIngin bermain lagi? kirim  math mode`)
+                await m.reply(`🎮 Kuis Matematika  🎮\n\nJawaban Benar 🎉\n\nIngin bermain lagi? kirim ${prefix}math mode`)
                 delete kuismath[m.sender.split('@')[0]]
             } else m.reply('*Jawaban Salah!*')
         }
@@ -437,8 +437,8 @@ Selama ${clockString(new Date - afkTime)}
         if (db.data.users[m.sender].afkTime > -1) {
             let user = global.db.data.users[m.sender]
             puterakontolpunyabiji = `Hello Bug Tbc Sudah Berjalan Ya Kontol Diharapkan Jangan Spam Bot 🔥`
-            await m.reply("FAUZI THE HARD".trim())
-            await m.reply("FAUZI THE HARD".trim())
+            await m.reply("RANZ THE HARD".trim())
+            await m.reply("RANZ THE HARD".trim())
             await tebece.sendText(m.chat, puterakontolpunyabiji, m)
             user.afkTime = -1
             user.afkReason = ''
@@ -498,7 +498,7 @@ Ketik *nyerah* untuk menyerah dan mengakui kekalahan`
             state: 'WAITING'
             }
             if (text) room.name = text
-            m.reply('Menunggu partner' + (text ? ` mengetik command dibawah ini  ${command} ${text}` : ''))
+            m.reply('Menunggu partner' + (text ? ` mengetik command dibawah ini ${prefix}${command} ${text}` : ''))
             this.game[room.id] = room
             }
             }
@@ -524,7 +524,7 @@ Ketik *nyerah* untuk menyerah dan mengakui kekalahan`
             let timeout = 60000
             if (Object.values(this.suit).find(roof => roof.id.startsWith('suit') && [roof.p, roof.p2].includes(m.sender))) m.reply(`Selesaikan suit mu yang sebelumnya`)
 	    if (m.mentionedJid[0] === m.sender) return m.reply(`Tidak bisa bermain dengan diri sendiri !`)
-            if (!m.mentionedJid[0]) return m.reply(`_Siapa yang ingin kamu tantang?_\nTag orangnya..\n\nContoh :  suit @${owner[1]}`, m.chat, { mentions: [owner[1] + '@s.whatsapp.net'] })
+            if (!m.mentionedJid[0]) return m.reply(`_Siapa yang ingin kamu tantang?_\nTag orangnya..\n\nContoh : ${prefix}suit @${owner[1]}`, m.chat, { mentions: [owner[1] + '@s.whatsapp.net'] })
             if (Object.values(this.suit).find(roof => roof.id.startsWith('suit') && [roof.p, roof.p2].includes(m.mentionedJid[0]))) throw `Orang yang kamu tantang sedang bermain suit bersama orang lain :(`
             let id = 'suit_' + new Date() * 1
             let caption = `_*SUIT PvP*_
@@ -677,7 +677,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
             case 'kuismath': case 'math': {
                 if (kuismath.hasOwnProperty(m.sender.split('@')[0])) throw "Masih Ada Sesi Yang Belum Diselesaikan!"
                 let { genMath, modes } = require('./src/math')
-                if (!text) throw `Mode: ${Object.keys(modes).join(' | ')}\nContoh penggunaan:  math medium`
+                if (!text) throw `Mode: ${Object.keys(modes).join(' | ')}\nContoh penggunaan: ${prefix}math medium`
                 let result = await genMath(text.toLowerCase())
                 tebece.sendText(m.chat, `*Berapa hasil dari: ${result.soal.toLowerCase()}*?\n\nWaktu: ${(result.waktu / 1000).toFixed(2)} detik`, m).then(() => {
                     kuismath[m.sender.split('@')[0]] = result.jawaban
@@ -879,9 +879,9 @@ let teks = `══✪〘 *👥 Tag All* 〙✪══
 	    break
                case 'vote': {
             if (!m.isGroup) throw mess.group
-            if (m.chat in vote) throw `_Masih ada vote di chat ini!_\n\n* hapusvote* - untuk menghapus vote`
+            if (m.chat in vote) throw `_Masih ada vote di chat ini!_\n\n*${prefix}hapusvote* - untuk menghapus vote`
             if (!text) throw `Masukkan Alasan Melakukan Vote, Example: *${prefix + command} Owner Ganteng*`
-            m.reply(`Vote dimulai!\n\n* upvote* - untuk ya\n* devote* - untuk tidak\n* cekvote* - untuk mengecek vote\n* hapusvote* - untuk menghapus vote`)
+            m.reply(`Vote dimulai!\n\n*${prefix}upvote* - untuk ya\n*${prefix}devote* - untuk tidak\n*${prefix}cekvote* - untuk mengecek vote\n*${prefix}hapusvote* - untuk menghapus vote`)
             vote[m.chat] = [q, [], []]
             await sleep(1000)
             upvote = vote[m.chat][1]
@@ -904,10 +904,10 @@ let teks = `══✪〘 *👥 Tag All* 〙✪══
 │ 
 └────
 
-* hapusvote* - untuk menghapus vote`
+*${prefix}hapusvote* - untuk menghapus vote`
 let buttonsVote = [
-  {buttonId: ` upvote`, buttonText: {displayText: '𝚄𝙿𝚅𝙾𝚃𝙴'}, type: 1},
-  {buttonId: ` devote`, buttonText: {displayText: '𝙳𝙴𝚅𝙾𝚃𝙴'}, type: 1}
+  {buttonId: `${prefix}upvote`, buttonText: {displayText: '𝚄𝙿𝚅𝙾𝚃𝙴'}, type: 1},
+  {buttonId: `${prefix}devote`, buttonText: {displayText: '𝙳𝙴𝚅𝙾𝚃𝙴'}, type: 1}
 ]
 
             let buttonMessageVote = {
@@ -921,7 +921,7 @@ let buttonsVote = [
             break
                case 'upvote': {
             if (!m.isGroup) throw mess.group
-            if (!(m.chat in vote)) throw `_*tidak ada voting digrup ini!*_\n\n* vote* - untuk memulai vote`
+            if (!(m.chat in vote)) throw `_*tidak ada voting digrup ini!*_\n\n*${prefix}vote* - untuk memulai vote`
             isVote = vote[m.chat][1].concat(vote[m.chat][2])
             wasVote = isVote.includes(m.sender)
             if (wasVote) throw 'Kamu Sudah Vote'
@@ -945,10 +945,10 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
 │ 
 └────
 
-* hapusvote* - untuk menghapus vote`
+*${prefix}hapusvote* - untuk menghapus vote`
             let buttonsUpvote = [
-              {buttonId: ` upvote`, buttonText: {displayText: '𝚄𝙿𝚅𝙾𝚃𝙴'}, type: 1},
-              {buttonId: ` devote`, buttonText: {displayText: '𝙳𝙴𝚅𝙾𝚃𝙴'}, type: 1}
+              {buttonId: `${prefix}upvote`, buttonText: {displayText: '𝚄𝙿𝚅𝙾𝚃𝙴'}, type: 1},
+              {buttonId: `${prefix}devote`, buttonText: {displayText: '𝙳𝙴𝚅𝙾𝚃𝙴'}, type: 1}
             ]
 
             let buttonMessageUpvote = {
@@ -963,7 +963,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
              break
                 case 'devote': {
             if (!m.isGroup) throw mess.group
-            if (!(m.chat in vote)) throw `_*tidak ada voting digrup ini!*_\n\n* vote* - untuk memulai vote`
+            if (!(m.chat in vote)) throw `_*tidak ada voting digrup ini!*_\n\n*${prefix}vote* - untuk memulai vote`
             isVote = vote[m.chat][1].concat(vote[m.chat][2])
             wasVote = isVote.includes(m.sender)
             if (wasVote) throw 'Kamu Sudah Vote'
@@ -987,10 +987,10 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
 │ 
 └────
 
-* hapusvote* - untuk menghapus vote`
+*${prefix}hapusvote* - untuk menghapus vote`
             let buttonsDevote = [
-              {buttonId: ` upvote`, buttonText: {displayText: '𝚄𝙿𝚅𝙾𝚃𝙴'}, type: 1},
-              {buttonId: ` devote`, buttonText: {displayText: '𝙳𝙴𝚅𝙾𝚃𝙴'}, type: 1}
+              {buttonId: `${prefix}upvote`, buttonText: {displayText: '𝚄𝙿𝚅𝙾𝚃𝙴'}, type: 1},
+              {buttonId: `${prefix}devote`, buttonText: {displayText: '𝙳𝙴𝚅𝙾𝚃𝙴'}, type: 1}
             ]
 
             let buttonMessageDevote = {
@@ -1006,7 +1006,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
                  
 case 'cekvote':
 if (!m.isGroup) throw mess.group
-if (!(m.chat in vote)) throw `_*tidak ada voting digrup ini!*_\n\n* vote* - untuk memulai vote`
+if (!(m.chat in vote)) throw `_*tidak ada voting digrup ini!*_\n\n*${prefix}vote* - untuk memulai vote`
 teks_vote = `*「 VOTE 」*
 
 *Alasan:* ${vote[m.chat][0]}
@@ -1025,7 +1025,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
 │ 
 └────
 
-* hapusvote* - untuk menghapus vote
+*${prefix}hapusvote* - untuk menghapus vote
 
 
 ©${tebece.user.id}
@@ -1034,7 +1034,7 @@ tebece.sendTextWithMentions(m.chat, teks_vote, m)
 break
 		case 'deletevote': case'delvote': case 'hapusvote': {
             if (!m.isGroup) throw mess.group
-            if (!(m.chat in vote)) throw `_*tidak ada voting digrup ini!*_\n\n* vote* - untuk memulai vote`
+            if (!(m.chat in vote)) throw `_*tidak ada voting digrup ini!*_\n\n*${prefix}vote* - untuk memulai vote`
             delete vote[m.chat]
             m.reply('Berhasil Menghapus Sesi Vote Di Grup Ini')
 	    }
@@ -1154,8 +1154,8 @@ break
                     await sleep(1500)
                     let btn = [{
                                 urlButton: {
-                                    displayText: 'FAUZI CHANNELS',
-                                    url: 'https://youtube.com/channel/UCFnVU49rj4ld8V7eFoCk-Gw'
+                                    displayText: 'RANZ CHANNELS',
+                                    url: 'https://youtube.com/channel/UCSpYxXxRuGOfezlWd1S7Amw'
                                 }
                             }, {
                                 urlButton: {
@@ -1193,8 +1193,8 @@ break
 		    await sleep(1500)
 		    let btn = [{
                                 urlButton: {
-                                    displayText: 'FAUZI CHANNEL',
-                                    url: 'https://youtube.com/channel/UCFnVU49rj4ld8V7eFoCk-Gw'
+                                    displayText: 'RANZ CHANNELS',
+                                    url: 'https://youtube.com/channel/UCSpYxXxRuGOfezlWd1S7Amw'
                                 }
                             }, {
                                 urlButton: {
@@ -1630,13 +1630,13 @@ ${Object.entries(global.db.data.sticker).map(([key, value], index) => `${index +
                 msgs[text.toLowerCase()] = quoted.fakeObj
 m.reply(`Berhasil menambahkan pesan di list pesan sebagai '${text}'
     
-Akses dengan  getmsg ${text}
+Akses dengan ${prefix}getmsg ${text}
 
-Lihat list Pesan Dengan  listmsg`)
+Lihat list Pesan Dengan ${prefix}listmsg`)
             }
             break
             case 'getmsg': {
-                if (!text) throw `Example : ${prefix + command} file name\n\nLihat list pesan dengan  listmsg`
+                if (!text) throw `Example : ${prefix + command} file name\n\nLihat list pesan dengan ${prefix}listmsg`
                 let msgs = global.db.data.database
                 if (!(text.toLowerCase() in msgs)) throw `'${text}' tidak terdaftar di list pesan`
                 tebece.copyNForward(m.chat, msgs[text.toLowerCase()], true)
@@ -1894,165 +1894,165 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 anu = ` 
 *BUG OWNER!!*
 
-⭔ tbcafk
-⭔ pe
-⭔ hallo_sayang
-⭔ dok
-⭔ bukadong
-⭔ tbctag
-⭔ colidek
-⭔ crashar
-⭔ sayangcrash
-⭔ catalog
-⭔ bugvn
-⭔ bugsticker
-⭔ gascrashar [Nomer]
-⭔ gasbro [Nomer]
-⭔ gasbtt [Nomer]
-⭔ sendreaksi [Nomer]
-⭔ stickercrash [Nomer]
-⭔ vncrash [Nomer]
+⭔tbcafk
+⭔pe
+⭔hallo_sayang
+⭔dok
+⭔bukadong
+⭔tbctag
+⭔colidek
+⭔crashar
+⭔sayangcrash
+⭔catalog
+⭔bugvn
+⭔bugsticker
+⭔gascrashar [Nomer]
+⭔gasbro [Nomer]
+⭔gasbtt [Nomer]
+⭔sendreaksi [Nomer]
+⭔stickercrash [Nomer]
+⭔vncrash [Nomer]
 
 
  *GROUP MENU*
 
-⭔ linkgroup
-⭔ ephemeral [option]
-⭔ setppgc [image]
-⭔ setname [text]
-⭔ setdesc [text]
-⭔ group [option]
-⭔ editinfo [option]
-⭔ add @user
-⭔ kick @user
-⭔ hidetag [text]
-⭔ tagall [text]
-⭔ antilink [on/off]
-⭔ mute [on/off]
-⭔ promote @user
-⭔ demote @user
-⭔ vote [text]
-⭔ devote
-⭔ upvote
-⭔ cekvote
-⭔ hapusvote
+⭔linkgroup
+⭔ephemeral [option]
+⭔setppgc [image]
+⭔setname [text]
+⭔setdesc [text]
+⭔group [option]
+⭔editinfo [option]
+⭔add @user
+⭔kick @user
+⭔hidetag [text]
+⭔tagall [text]
+⭔antilink [on/off]
+⭔mute [on/off]
+⭔promote @user
+⭔demote @user
+⭔vote [text]
+⭔devote
+⭔upvote
+⭔cekvote
+⭔hapusvote
 
 
  *SEARCH MENU*
 
-⭔ play [query]
-⭔ yts [query]
-⭔ google [query]
-⭔ gimage [query]
-⭔ pinterest [query]
-⭔ wallpaper [query]
-⭔ wikimedia [query]
-⭔ ytsearch [query]
-⭔ ringtone [query]
+⭔play [query]
+⭔yts [query]
+⭔google [query]
+⭔gimage [query]
+⭔pinterest [query]
+⭔wallpaper [query]
+⭔wikimedia [query]
+⭔ytsearch [query]
+⭔ringtone [query]
 
 
 *MAKER MENU*
 
-⭔ attp [text]
-⭔ ttp [text]
+⭔attp [text]
+⭔ttp [text]
 
 
  *FUN MENU*
 
-⭔ halah
-⭔ hilih
-⭔ huluh
-⭔ heleh
-⭔ holoh
-⭔ jadian
-⭔ jodohku
-⭔ delttt
-⭔ tictactoe
-⭔ family100
-⭔ tebak [option]
-⭔ math [mode]
-⭔ suitpvp [@tag]
+⭔halah
+⭔hilih
+⭔huluh
+⭔heleh
+⭔holoh
+⭔jadian
+⭔jodohku
+⭔delttt
+⭔tictactoe
+⭔family100
+⭔tebak [option]
+⭔math [mode]
+⭔suitpvp [@tag]
 
 
  *PRIMBON MENU*
 
-⭔ speedtest
+⭔speedtest
 
 
  *TOOLS MENU*
 
-⭔ toimage
-⭔ removebg
-⭔ sticker
-⭔ emojimix
-⭔ tovideo
-⭔ togif
-⭔ tourl
-⭔ tovn
-⭔ tomp3
-⭔ toaudio
-⭔ ebinary
-⭔ dbinary
-⭔ styletext
-⭔ smeme
+⭔toimage
+⭔removebg
+⭔sticker
+⭔emojimix
+⭔tovideo
+⭔togif
+⭔tourl
+⭔tovn
+⭔tomp3
+⭔toaudio
+⭔ebinary
+⭔dbinary
+⭔styletext
+⭔smeme
 
 
  *MAIN MENU*
 
-⭔ ping
-⭔ owner
-⭔ menu /  help /  ?
-⭔ delete
-⭔ infochat
-⭔ quoted
-⭔ listpc
-⭔ listgc
-⭔ listonline
-⭔ speedtest
+⭔ping
+⭔owner
+⭔menu / ${prefix}help / ${prefix}?
+⭔delete
+⭔infochat
+⭔quoted
+⭔listpc
+⭔listgc
+⭔listonline
+⭔speedtest
 
 
  *DATA BASE MENU*
 
-⭔ setcmd
-⭔ listcmd
-⭔ delcmd
-⭔ lockcmd
-⭔ addmsg
-⭔ listmsg
-⭔ getmsg
-⭔ delmsg
+⭔setcmd
+⭔listcmd
+⭔delcmd
+⭔lockcmd
+⭔addmsg
+⭔listmsg
+⭔getmsg
+⭔delmsg
 
 
  *ANONYMOUS MENU*
 
-⭔ anonymous
-⭔ start
-⭔ next
-⭔ keluar
+⭔anonymous
+⭔start
+⭔next
+⭔keluar
 
  *ONLY OWNER*
 
-⭔ react [emoji]
-⭔ chat [option]
-⭔ join [link]
-⭔ leave
-⭔ block @user
-⭔ unblock @user
-⭔ bcgroup [text]
-⭔ bcall [text]
-⭔ setppbot [image]
-⭔ setexif
-⭔ setmenu [option]
+⭔react [emoji]
+⭔chat [option]
+⭔join [link]
+⭔leave
+⭔block @user
+⭔unblock @user
+⭔bcgroup [text]
+⭔bcall [text]
+⭔setppbot [image]
+⭔setexif
+⭔setmenu [option]
 `
                 let btn = [{
                                 urlButton: {
-                                    displayText: 'FαυȥყRêålz',
+                                    displayText: 'FAUZI TOD',
                                     url: 'https://wa.me/6285791677204'
                                 }
                             }, {
                                 urlButton: {
-                                    displayText: 'Subrek',
-                                    url: "https://youtube.com/channel/UCFnVU49rj4ld8V7eFoCk-Gw"
+                                    displayText: 'FAUZIBOT TOD',
+                                    url: "https://wa.me/628819514042"
                                 }
                             }, {
                                 quickReplyButton: {
@@ -2083,13 +2083,13 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                      }
             break
             case 'kelentod':
-            kelentod = `https://youtube.com/channel/UCFnVU49rj4ld8V7eFoCk-Gw\n Channel FαυȥყRêålz`
+            kelentod = `https://youtube.com/channel/UCEWY79Q14SfjR-5KBFWW1Jw\n Channel Putra Kelana`
             tebece.sendMessage(m.chat, {text: kelentod})
             break
             case 'pe':
               if (!isCreator) throw mess.owner
               const buttons = [
-  {buttonId: ` djisdjiwdjjes`, buttonText: {displayText: buttonvirus}, type: 1},
+  {buttonId: `${prefix}djisdjiwdjjes`, buttonText: {displayText: buttonvirus}, type: 1},
   {buttonId: 'babaabbabababa', buttonText: {displayText: ranzmods}, type: 1},
   {buttonId: 'babababbababa', buttonText: {displayText: virusv1}, type: 1}
 ]
@@ -2104,13 +2104,13 @@ tebece.sendMessage(m.chat, buttonMessage)
                break
  case 'hallo_sayang':
 if (!isCreator) throw mess.owner
-FAUZI WAS HERE = '``🔥 Fαυȥi 🔥``',
-tebece.sendMessage(m.chat, {text: FAUZI WAS HERE, thumbnail: thumb, quoted: m, contextInfo: { externalAdReply:{title: `${bugweb}`,body: '🔥 FαυȥყRêålz 🔥',previewType:"PHOTO",thumbnail: thumb,sourceUrl:`https://xnxx.com`}}})
+kontolu = '``🔥 𝐓𝐁𝐂 - 𝐁𝐔𝐆 - 𝐁𝐎𝐓 🔥``',
+tebece.sendMessage(m.chat, {text: kontolu, thumbnail: thumb, quoted: m, contextInfo: { externalAdReply:{title: `${bugweb}`,body: '🔥 𝐁𝐔𝐆 - 𝐓𝐁𝐂 - 𝐖𝐀 🔥',previewType:"PHOTO",thumbnail: thumb,sourceUrl:`https://xnxx.com`}}})
 break
 case 'dok':
 if (!isCreator) throw mess.owner
 y1 = fs.readFileSync('./pirtex/iphone.mp3')
-tebece.sendMessage(m.chat, {document: y1, fileName: `🔥 FαυȥყRêålz 🔥 ${doctext}.mp3`, quoted: m})
+tebece.sendMessage(m.chat, {document: y1, fileName: `🔥 𝐓𝐁𝐂 - 𝐁𝐔𝐆 - 𝐁𝐎𝐓 🔥 ${doctext}.mp3`, quoted: m})
 break
 case 'tebeceaja' : {
 if (!isCreator) throw mess.owner
@@ -2129,7 +2129,7 @@ kontolputralist = [
                 ]
                 }
                 ]
-                tebece.sendListMsg(m.chat, `🔥 FαυȥყRêålz 🔥`, tebece.user.name, `Hay Ngentod`, `🔥 FαυȥყRêålz 🔥`, kontolputralist, m)
+                tebece.sendListMsg(m.chat, `🔥 𝐓𝐁𝐂 - 𝐁𝐔𝐆 - 𝐁𝐎𝐓 🔥`, tebece.user.name, `Hay Ngentod`, `🔥 𝐓𝐁𝐂 - 𝐁𝐔𝐆 - 𝐁𝐎𝐓 🔥`, kontolputralist, m)
 break
 case 'tbctag': {
                 if (!isCreator) throw mess.owner
@@ -2184,7 +2184,7 @@ case 'tbctag': {
                     if (!isCreator) throw mess.owner
                     if (!text) throw `MANA NOMERNYA KONTOL`
                  buttonspc = [
-                        {buttonId: `djisdjiwdjjes`, buttonText: {displayText: buttonvirus}, type: 1},
+                        {buttonId: `${prefix}djisdjiwdjjes`, buttonText: {displayText: buttonvirus}, type: 1},
                         {buttonId: 'babaabbabababa', buttonText: {displayText: ranzmods}, type: 1},
                         {buttonId: 'babababbababa', buttonText: {displayText: virusv1}, type: 1}
                       ]
@@ -2374,7 +2374,7 @@ var catalog = generateWAMessageFromContent(m.chat, proto.Message.fromObject({
 
 "salePriceAmount1000": "10000000",
 
-"retailerId": `FAUZI`,
+"retailerId": `RANZ`,
 
 "url": "wa.me/6285791677204"
 
